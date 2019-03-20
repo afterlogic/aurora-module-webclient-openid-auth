@@ -1,0 +1,14 @@
+{
+	"Disabled": [
+		false,
+		"bool"
+	],
+	"OpenIdServer": [
+		"",
+		"string"
+	],
+	"MasterPassword": [
+		"",
+		"string"
+	]
+}
