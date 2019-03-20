@@ -84,25 +84,31 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 					$sEmail = $_GET['openid_sreg_email'];
 					$sPassword = $this->getConfig('MasterPassword', '');
 
-					$oUser = \Aurora\Modules\Core\Module::Decorator()->GetUserByPublicId($sEmail);
-					if (isset($oUser))
+					if (empty($sPassword))
 					{
-						$oAccount = \Aurora\Modules\Mail\Module::getInstance()->getAccountsManager()->getAccountByEmail($sEmail);
-						if ($oAccount)
+						$oUser = \Aurora\Modules\Core\Module::Decorator()->GetUserByPublicId($sEmail);
+						if (isset($oUser))
 						{
-							$aResult = \Aurora\Modules\Core\Module::Decorator()->Login($sEmail, $oAccount->GetPassword());
-
-							if (is_array($aResult) && isset($aResult['AuthToken']))
+							$oAccount = \Aurora\Modules\Mail\Module::getInstance()->getAccountsManager()->getAccountByEmail($sEmail);
+							if ($oAccount)
 							{
-								@\setcookie(
-									\Aurora\System\Application::AUTH_TOKEN_KEY, 
-									$aResult['AuthToken'], 
-									\strtotime('+30 days'), 
-									\Aurora\System\Api::getCookiePath()
-								);
+								$sPassword = $oAccount->GetPassword();
 							}
 						}
 					}
+
+					$aResult = \Aurora\Modules\Core\Module::Decorator()->Login($sEmail, $sPassword);
+
+					if (is_array($aResult) && isset($aResult['AuthToken']))
+					{
+						@\setcookie(
+							\Aurora\System\Application::AUTH_TOKEN_KEY, 
+							$aResult['AuthToken'], 
+							\strtotime('+30 days'), 
+							\Aurora\System\Api::getCookiePath()
+						);
+					}
+
 		
 					\Aurora\System\Api::Location('./');					
 				}
