@@ -44,7 +44,7 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 
 		$openid = new \SimpleOpenID();
 		$openid->SetIdentity($sOpenIdUrl);
-		$openid->SetTrustRoot('http://' . $_SERVER["HTTP_HOST"]);
+		$openid->SetTrustRoot($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER["HTTP_HOST"]);
 
 		$openid->SetRequiredFields(array('email','fullname'));
 		$openid->SetOptionalFields(array('dob','gender','postcode','country','language','timezone'));
