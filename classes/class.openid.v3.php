@@ -270,6 +270,15 @@ class SimpleOpenID{
 		$params['openid.mode'] = 'checkid_setup';
 		$params['openid.identity'] = urlencode($this->openid_url_identity);
 		$params['openid.trust_root'] = urlencode($this->URLs['trust_root']);
+
+		/* CUSTOM */
+
+		$params['openid.claimed_id'] = 'http://specs.openid.net/auth/2.0/identifier_selec';
+		$params['openid.ns'] = 'http://specs.openid.net/auth/2.0';
+		$params['openid.ns.sreg'] = 'hhttp://openid.net/extensions/sreg/1.1';
+		$params['skin'] = 'authmail-ig';
+
+		/* CUSTOM */
 		
 		if (isset($this->fields['required'])
 		  && (count($this->fields['required']) > 0)) {
