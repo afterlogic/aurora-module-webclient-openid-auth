@@ -46,8 +46,8 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 		$openid->SetIdentity($sOpenIdUrl);
 		$openid->SetTrustRoot($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER["HTTP_HOST"]);
 
-		$openid->SetRequiredFields(array('email','fullname'));
-		$openid->SetOptionalFields(array('dob','gender','postcode','country','language','timezone'));
+		$openid->SetRequiredFields(array('email'));
+		$openid->SetOptionalFields(array('fullname'));
 		if ($openid->GetOpenIDServer())
 		{
 			$openid->SetApprovedURL($_SERVER["HTTP_REFERER"]);  	// Send Response from OpenID server to this script
