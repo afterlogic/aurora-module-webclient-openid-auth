@@ -72,7 +72,8 @@ class SimpleOpenID{
 		'optional'	 => array(),
 	);
 	
-	function SimpleOpenID(){
+	function __construct()
+	{
 		if (!function_exists('curl_exec')) {
 			die('Error: Class SimpleOpenID requires curl extension to work');
 		}
@@ -275,7 +276,7 @@ class SimpleOpenID{
 
 		$params['openid.claimed_id'] = 'http://specs.openid.net/auth/2.0/identifier_selec';
 		$params['openid.ns'] = 'http://specs.openid.net/auth/2.0';
-		$params['openid.ns.sreg'] = 'hhttp://openid.net/extensions/sreg/1.1';
+//		$params['openid.ns.sreg'] = 'hhttp://openid.net/extensions/sreg/1.1';
 		$params['skin'] = 'authmail-ig';
 
 		/* CUSTOM */
