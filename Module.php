@@ -29,7 +29,7 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 	public function init()
 	{
 		$this->AddEntry('openid.login', 'onOpenidLoginEntry');
-		$this->AddEntry('openid.mode', 'onOpenidModeEntry');
+		$this->AddEntry('openid.ns', 'onOpenidModeEntry');
 		$this->includeTemplate('StandardLoginFormWebclient_LoginView', 'Login-After', 'templates/SignInButtonsView.html', self::GetName());
 	}
 	
@@ -74,6 +74,8 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 		{
 			$openid = new \SimpleOpenID();
 			$sOpenidIdentity = $this->getConfig('OpenIdServer', '');
+//			$sOpenidIdentity = $_GET['openid_identity'];
+
 			$openid->SetIdentity($sOpenidIdentity);
 			$openid_validation_result = $openid->ValidateWithServer();
 			if ($openid_validation_result == true)
@@ -107,10 +109,13 @@ class Module extends \Aurora\System\Module\AbstractWebclientModule
 							\strtotime('+30 days'), 
 							\Aurora\System\Api::getCookiePath()
 						);
+						\Aurora\System\Api::Location('./');					
 					}
-
-		
-					\Aurora\System\Api::Location('./');					
+					else
+					{
+						$openid->SetIdentity($sOpenidIdentity);
+						\Aurora\System\Api::Location($openid->GetOpenIDServer());					
+					}
 				}
 
 			}
